@@ -1,1 +1,108 @@
-//code under re-construction...
+class Main 
+{
+  public static void main(String[] args) 
+  {
+    int x=0;
+    int y=0;
+    boolean a;
+    int count=0;
+    int num=0;
+    int[][] ans=
+    {
+      {5,3,0,0,7,0,0,0,0},
+      {6,0,0,1,9,5,0,0,0},
+      {0,9,8,0,0,0,0,6,0},
+      {8,0,0,0,6,0,0,0,3},
+      {4,0,0,8,0,3,0,0,1},
+      {7,0,0,0,2,0,0,0,6},
+      {0,6,0,0,0,0,2,8,0},
+      {0,0,0,4,1,9,0,0,5},
+      {0,0,0,0,8,0,0,7,9},
+	  };
+    while(x<9)
+    {
+      if(ans[x][y]==0)
+      {
+        for(int i=1; i<=9; i++)
+        {
+          a=check(ans, x, y, i);
+          if(a==true)
+          {
+            count++;
+            if(count==1)
+            {
+              num=i;
+            }
+          }
+        }
+        if(count==1)
+        {
+          ans[x][y]=num;
+          x=0;
+          y=0;
+        }
+        else
+        {
+          y++;
+        }
+        count=0;
+        num=0;
+      }
+      else
+      {
+        y++;
+      }
+      if (y==9)
+      {
+        x++;
+        y=0;
+      }
+    }
+    printGrid(ans);
+  }
+
+  public static void printGrid(int[][] ans)
+  {
+    for(int i=0; i<9; i++)
+    {
+      String a="";
+      for(int j=0; j<9; j++)
+      {
+        a=a+" "+ans[i][j];
+      }
+      System.out.print("\n"+a);
+    }
+  }
+
+  public static boolean check(int[][]ans, int x, int y, int i)
+  {
+    //check column
+    for(int c=0; c<9; c++)
+    {
+      if(ans[c][y]==i)
+      {
+        return false;
+      }
+    }
+    //check row
+    for(int r=0; r<9; r++)
+    {
+      if(ans[x][r]==i)
+      {
+        return false;
+      }
+    }
+    //check in square
+    x=x-x%3;
+    y=y-y%3;
+    for(int a=0; a<3; a++)
+    {
+      for(int b=0; b<3; b++)
+          if(ans[x+a][y+b]==i)
+          {
+            return false;
+          }
+    }
+    return true;
+  }
+}
