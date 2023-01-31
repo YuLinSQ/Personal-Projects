@@ -1,0 +1,308 @@
+#include <square.h>
+
+
+namespace student_ai{
+
+Square play(int board[3][3], int token){
+    Square result(-1,-1, token);
+    int count;
+    int other;
+    if(token==1)
+    {
+        other=2;
+        if(board[0][2]==0)
+        {
+            result.row=0;
+            result.col=2;
+            return result;
+        }
+    }
+    else
+    {
+        other=1;
+        if(board[1][1]==0)
+        {
+            result.row=1;
+            result.col=1;
+            return result;
+        }
+    }
+    // win check
+    // check row
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            if (board[i][j] == token)
+            {
+                count++;
+            }
+        }
+        if(count==2)
+        {
+            for(int j=0; j<3; j++)
+            {
+                if(board[i][j]==0)
+                {
+                    result.row=i;
+                    result.col=j;
+                    return result;
+                }
+            }
+        }
+        count=0;
+    }
+    // check col
+    for (int j = 0; j < 3; j++)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            if (board[i][j] == token)
+            {
+                count++;
+            }
+        }
+        if(count==2)
+        {
+            for(int i=0; i<3; i++)
+            {
+                if(board[i][j]==0)
+                {
+                    result.row=i;
+                    result.col=j;
+                    return result;
+                }
+            }
+        }
+        count=0;
+    }
+    //check diagonal 1
+    for(int i=0; i<3; i++)
+    {
+        if(board[i][i]==token)
+        {
+            count++;
+        }
+    }
+    if(count==2)
+    {
+        for(int i=0; i<3; i++)
+        {
+            if(board[i][i]==0)
+            {
+                result.row=i;
+                result.col=i;
+                return result;
+            }
+        }
+    }
+    count=0;
+    //check diagonal 2
+    for(int i=0; i<3; i++)
+    {
+        if(board[i][2-i]==token)
+        {
+            count++;
+        }
+    }
+    if(count==2)
+    {
+        for(int i=0; i<3; i++)
+        {
+            if(board[i][2-i]==0)
+            {
+                result.row=i;
+                result.col=2-i;
+                return result;
+            }
+        }
+    }
+    count=0;
+    // lose check
+    // check row
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            if (board[i][j] == other)
+            {
+                count++;
+            }
+        }
+        if(count==2)
+        {
+            for(int j=0; j<3; j++)
+            {
+                if(board[i][j]==0)
+                {
+                    result.row=i;
+                    result.col=j;
+                    return result;
+                }
+            }
+        }
+        count=0;
+    }
+    // check col
+    for (int j = 0; j < 3; j++)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            if (board[i][j] == other)
+            {
+                count++;
+            }
+        }
+        if(count==2)
+        {
+            for(int i=0; i<3; i++)
+            {
+                if(board[i][j]==0)
+                {
+                    result.row=i;
+                    result.col=j;
+                    return result;
+                }
+            }
+        }
+        count=0;
+    }
+    //check diagonal 1
+    for(int i=0; i<3; i++)
+    {
+        if(board[i][i]==other)
+        {
+            count++;
+        }
+    }
+    if(count==2)
+    {
+        for(int i=0; i<3; i++)
+        {
+            if(board[i][i]==0)
+            {
+                result.row=i;
+                result.col=i;
+                return result;
+            }
+        }
+    }
+    count=0;
+    //check diagonal 2
+    for(int i=0; i<3; i++)
+    {
+        if(board[i][2-i]==other)
+        {
+            count++;
+        }
+    }
+    if(count==2)
+    {
+        for(int i=0; i<3; i++)
+        {
+            if(board[i][2-i]==0)
+            {
+                result.row=i;
+                result.col=2-i;
+                return result;
+            }
+        }
+    }
+    count=0;
+    for(int i=0; i<3; i++)
+    {
+        for(int j=0; j<3; j++)
+        {
+            if(board[i][j]==1||board[i][j]==2)
+            {
+                count++;
+            }
+        }
+    }
+    //hard coding...
+    if(token==1)
+    {
+        if(count==2)
+        {
+            count=0;
+            if(board[1][1]==2||board[0][0]==2||board[2][2]==2)
+            {
+                result.row=2;
+                result.col=0;
+                return result;
+            }
+            else
+            {
+                result.row=1;
+                result.col=1;
+                return result;
+            }
+        }
+        if(count==4)
+        {
+            count=0;
+            if(board[0][1]==2||board[1][0]==2)
+            {
+                result.row=2;
+                result.col=2;
+                return result;
+            }
+            else
+            {
+                result.row=0;
+                result.col=0;
+                return result;
+            }
+        }
+    }
+    else
+    {
+        if(count==1)
+        {
+            count=0;
+            result.row=2;
+            result.col=2;
+            return result;
+        }
+        if(count==3)
+        {
+            count=0;
+            if(board[0][0]==1&&board[2][2]==1)
+            {
+                result.row=0;
+                result.col=1;
+                return result;
+            }
+            else if(board[0][2]==1&&board[2][0]==1)
+            {
+                result.row=0;
+                result.col=1;
+                return result;
+            }
+            else if(board[0][0]==0)
+            {
+                result.row=0;
+                result.col=0;
+                return result;
+            }
+            else
+            {
+                result.row=2;
+                result.col=2;
+                return result;
+            }
+        }
+    }
+    for (int i = 0; i < 3; i++){
+        for (int j = 0; j < 3; j++){
+            if (board[i][j] == 0){
+                result.row = i;
+                result.col = j;
+                return result;
+            }
+        }
+    }
+    return result;
+}
+
+}
