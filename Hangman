@@ -1,0 +1,99 @@
+#include <iostream>
+#include <vector>
+#include <random>
+
+using namespace std;
+
+int main()
+{
+    vector<string> a;
+    a.push_back("busy");
+    a.push_back("this");
+    a.push_back("week");
+    a.push_back("cause");
+    a.push_back("midterms");
+    string word;
+    random_device dev;
+    mt19937 rng(dev());
+    uniform_int_distribution<mt19937::result_type> dist(0,4);
+    word=a[dist(rng)];
+    int end=6;
+    string b;
+    bool c=false;
+    string d;
+    string e;
+    string temp;
+    for(int i=0; i<word.length(); i++)
+    {
+        e.append("-");
+    }
+    while(end>0)
+    {
+        cout<<"word: "<<e<<endl;
+        if(end==6)
+        {
+            cout<<" --- "<<endl<<" | | "<<endl<<" |   "<<endl<<" |   "<< endl<<" |   "<<endl<<" |   "<<endl<<"_____"<<endl;
+        }
+        if(end==5)
+        {
+            cout<<" --- "<<endl<<" | | "<<endl<<" | O "<<endl<<" |   "<< endl<<" |   "<<endl<<" |   "<<endl<<"_____"<<endl;
+        }
+        if(end==4)
+        {
+            cout<<" --- "<<endl<<" | | "<<endl<<" | O "<<endl<<" | | "<< endl<<" |   "<<endl<<" |   "<<endl<<"_____"<<endl;
+        }
+        if(end==3)
+        {
+            cout<<" --- "<<endl<<" | | "<<endl<<" | O "<<endl<<" |\\| "<< endl<<" |   "<<endl<<" |   "<<endl<<"_____"<<endl;
+        }
+        if(end==2)
+        {
+            cout<<" --- "<<endl<<" | | "<<endl<<" | O "<<endl<<" |\\|/"<< endl<<" |   "<<endl<<" |   "<<endl<<"_____"<<endl;
+        }
+        if(end==1)
+        {
+            cout<<" --- "<<endl<<" | | "<<endl<<" | O "<<endl<<" |\\|/"<< endl<<" |/  "<<endl<<" |   "<<endl<<"_____"<<endl;
+        }
+        cout<<"guess an alphabet"<<endl;
+        cout<<"attempts:"<<d<<endl;
+        cout<<"Tries left: "<<end<<endl;
+        cin>>b;
+        d.append(b);
+        d.append(" ");
+        for(int i=0; i<word.length(); i++)
+        {
+            temp=word[i];
+            if(temp==b)
+            {
+                e.replace(i, 1, b);
+                c=true;
+            }
+        }
+        if(c==false)
+        {
+            end--;
+        }
+        c=false;
+        for(int i=0; i<word.length(); i++)
+        {
+            temp=e[i];
+            if(temp=="-")
+            {
+                c=true;
+            }
+        }
+        if(c==false)
+        {
+            end=-1;
+        }
+        c=false;
+    }
+    if(end==0)
+    {
+        cout<<" --- "<<endl<<" | | "<<endl<<" | O "<<endl<<" |\\|/"<< endl<<" |/ \\ "<<endl<<" |   "<<endl<<"_____"<<endl;
+        cout<<"try again?"<<endl;
+        return 0;
+    }
+    cout<<"You win!!!"<<endl;
+    return 0;
+}
