@@ -1,0 +1,38 @@
+import requests
+import logging
+
+base_url = "https://pokeapi.co/api/v2/a"
+
+def get_pokemon_info(name):
+    url = f"{base_url}/pokemon/{name}"
+    try:
+        response = requests.get(url)
+        # allows non 200 to be seen as error
+        response.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        logging.exception(f"{e}")
+        return None
+    if response.status_code == 200:
+        p_data = response.json()
+        return p_data
+    else:
+        logging.exception(f"failed, {response.status_code}")
+    return
+
+# logging.basicConfig(
+    # level=logging.INFO,
+    # filename='pokemon_errors.log',  # This creates/opens the file
+    # filemode='a',                    # 'a' for append (add to end), 'w' to overwrite
+    # format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+# )
+# levels: debug, info, warning, error, critical
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+p_name = "pyukumuku"
+p_info = get_pokemon_info(p_name)
+
+if p_info:
+    print(p_info["name"])
+    print(p_info["id"])
+    print(p_info["types"])
+    print(p_info.keys())
